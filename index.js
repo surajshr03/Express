@@ -12,7 +12,9 @@ import userRouter from "./src/router/usersRouter.js";
 import bcrypt from "bcrypt";//dim light means not being used
 //to remove unused imports : alt+ shift + o
 import jwt from "jsonwebtoken";
+
 import fileRouter from "./src/router/fileRouter.js";
+import imageRouter from "./src/router/imageRouter.js";
 
 let expressApp = express();
 expressApp.use(json());
@@ -37,5 +39,6 @@ expressApp.use("/reviews",reviewRouter);
 
 expressApp.use("/users", userRouter);
 
-expressApp.use("/files", fileRouter);
 
+expressApp.use("/files", fileRouter);
+expressApp.use("/images", imageRouter);// practise to send images to public(static folder)

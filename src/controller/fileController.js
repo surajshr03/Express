@@ -7,8 +7,6 @@ export let handlefile=(req,res)=>{
             success:true,
             message:"file uploaded successfully.",
             result:links
-            
       })
-
 }
 
