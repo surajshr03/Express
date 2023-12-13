@@ -22,7 +22,7 @@ expressApp.use(express.static("./public"));
 
 
 expressApp.listen(8001,()=>{
-      console.log("Server is running in port no: 8001")
+      console.log(`Server is running in port no: 8001`)
 });
 
 connectToMongodb(); // calling mdb function

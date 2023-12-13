@@ -7,6 +7,7 @@ iii:npm i bcrypt
 iv:npm i jsonwebtoken
 v: npm i multer
 vi: npm i nodemailer
+vii:npm i dotenv
 ----------------------------------------------------
 initially :
 node js
@@ -31,4 +32,5 @@ json pkg awuxa (no dependency)
 // npm i bcrypt : for password hashing
 // npm i jsonwebtoken : for token generation and validation.
 // npm i multer : it is a pkg which takes images from postman and add img to public folder
-//npm i nodemailer : it's a pkg that isused for automatially sending mail after api hit
+// npm i nodemailer : it's a pkg that isused for automatially sending mail after api hit
+// npm i dotenv : .env ko variable run garna +

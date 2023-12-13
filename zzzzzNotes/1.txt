@@ -83,3 +83,26 @@ try {
 
 //-------->>form-data<<<
 //in form data we can get file information through req.files whereas we can get other iformation via req.body  
+
+
+
+----------------------------------
+>>>>>>>status code: postman ko output ma status dinxa being either success or failure
+i: success:(2XX family):
+      get, delete=>200
+      post,patch=>201
+
+ii: failure:(4XX family):
+      not found:404
+      conflict:409
+      aruma : 400
+---------------------------      
+>>  .env:
+(code ko part haina)
+-always make .env file in root folder
+-in .env we define special variable(credentials,ports,links)
+-variable ko name always in uppercase
+-YESMA PATHAKO SABAI VALUE STRING MA HUNXA
+-
+-variable jun file ma call gareko xa tya - config() garnu parxa
+-config() import ni garney

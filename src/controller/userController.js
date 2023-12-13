@@ -20,13 +20,13 @@ export let createUser = async (req, res) => {
 
     })
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "user created successfully.",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(409).json({
       success: false,
       message: error.message,
     });
@@ -38,13 +38,13 @@ export let readUser = async (req, res) => {
     // let result = await User.find({});
     let result = await User.find({});
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "user read successfully.",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -55,13 +55,13 @@ export let readUserDetails = async (req, res) => {
   let userId = req.params.userId;
   try {
     let result = await User.findById(userId);
-    res.json({
+    res.status(200).json({
       success: true,
       message: "user read successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -74,13 +74,13 @@ export let updateUser = async (req, res) => {
 
   try {
     let result = await User.findByIdAndUpdate(userId, userData);
-    res.json({
+    res.status(201).json({
       success: true,
       message: "user updated successfully.",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -93,13 +93,13 @@ export let deleteUser = async (req, res) => {
   try {
     let result = await User.findByIdAndDelete(userId);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "user deleted successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
