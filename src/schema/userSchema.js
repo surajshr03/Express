@@ -15,6 +15,16 @@ let userSchema = Schema(
       type: String,
       required:[true,"password is required."]
     },
+    profileImage:{
+      type : String,
+      required:[false,"profileImage is required."],
+    },
+    resume:{
+      type : String,
+      required :[false,"resume field is required."],
+    },
+
+
     /*
     isMarried: {
       type: Boolean,

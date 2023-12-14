@@ -15,14 +15,15 @@ import jwt from "jsonwebtoken";
 
 import fileRouter from "./src/router/fileRouter.js";
 import imageRouter from "./src/router/imageRouter.js";
+import { port } from "./src/constant.js";
 
 let expressApp = express();
 expressApp.use(json());
 expressApp.use(express.static("./public"));
 
 
-expressApp.listen(8001,()=>{
-      console.log(`Server is running in port no: 8001`)
+expressApp.listen(port,()=>{
+      console.log(`Server is running in port no:${port}`)
 });
 
 connectToMongodb(); // calling mdb function

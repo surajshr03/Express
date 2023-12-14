@@ -35,7 +35,7 @@ must not expire
 
 if token is valid=>infoObj
 if not valid =>error
-
+-----------------------------
 let files = [
         {
           destination: "./public",

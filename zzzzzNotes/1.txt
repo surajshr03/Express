@@ -106,3 +106,22 @@ ii: failure:(4XX family):
 -
 -variable jun file ma call gareko xa tya - config() garnu parxa
 -config() import ni garney
+
+----------------------------------
+
+      >> register:
+      -data liney->hash  pw-> save in db->email send(user controller ko create ma xa)
+
+
+---------------
+
+
+      >>login:
+      email,pw(enter)
+      check if email exist and if exist?(check)
+      if mtch generate token(generate)
+      send toke to postman
+
+-------------------------------------------------
+            >> my-profile
+            

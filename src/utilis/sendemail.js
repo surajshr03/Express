@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { email, password } from "../constant.js";
 // the main thing in this file is trasporterInfo and mailInfo
 //neglet other part
 
@@ -16,8 +17,13 @@ let transporterInfo = {
   auth: {
     // note user and pass most be genuine
     //it is the email through which email is send
-    user: "sgod7444@gmail.com",//$u.g,,&&&
-    pass: "pzpo qixw mkuv rcmt",
+    user: email,//$u.g,,&&&
+    pass: password,
+
+    // user: "email",//$u.g,,&&&
+   // pass: "pzpo qixw mkuv rcmt",
+
+
     // to send email form server first you have to =>
     //use 2-step verification and generate app password
     //instead of using your password use app password of gmail

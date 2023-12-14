@@ -1,7 +1,10 @@
+import { serverLink } from "../constant.js";
 
 export let handlefile=(req,res)=>{
       let links = req.files.map((value,i)=>{
-            return `http://localhost:8001/${value.filename}`;
+            return `${serverLink}/${value.filename}`;
+            //return `http://localhost:8001/${value.filename}`
+            //serverLink = http://localhost:8001
       })
       res.json({
             success:true,
