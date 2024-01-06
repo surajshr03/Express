@@ -125,3 +125,23 @@ ii: failure:(4XX family):
 -------------------------------------------------
             >> my-profile
             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  --------------------------------
+          >CORS:
+          CROSS 
+          ORIGIN (API)
+          RESOURCE 
+          SHARING          

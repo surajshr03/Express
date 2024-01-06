@@ -5,12 +5,12 @@ export let createProduct = async (req, res) => {
   let productData = req.body;
   try {
     let result = await Product.create(productData);
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Product data created successfully.",
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: e.message,
     });
@@ -23,13 +23,13 @@ export let readAllProducts = async (req, res) => {
   let result = await Product.find({});
 
   try {
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Product data read(retrieve) successfully",
       result: result,
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: e.message,
     });
@@ -42,13 +42,13 @@ export let readProduct = async (req, res) => {
 
   try {
     let result = await Product.findById(productId);
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Product read successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -61,13 +61,13 @@ export let updateProduct = async (req, res) => {
   let updateData = req.body;
   try {
     let result = await Product.findByIdAndUpdate(productId, updateData);
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Product updated successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -78,14 +78,14 @@ export let updateProduct = async (req, res) => {
 export let deleteProduct = async (req, res) => {
   let productId = req.params.productId;
   try {
-    let result = await Product.findByIdAndDelete(productId);
-    res.json({
+    let result = await Product.findByIdAndDenlete(productId);
+    res.status(200).json({
       success: true,
       message: "Product deleted successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });

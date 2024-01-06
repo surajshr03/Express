@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createUser, deleteUser, loginUser, myProfile, readUser, readUserDetails, updateUser } from "../controller/userController.js";
+import { createUser, deleteUser, loginUser, myProfile, myProfileUpdate, readUser, readUserDetails, updateUser } from "../controller/userController.js";
 
 let userRouter = Router();
 
@@ -10,8 +10,10 @@ userRouter.route("/login").post(loginUser);
 
 userRouter.route("/my-profile").get(myProfile)
 
+userRouter.route("/myprofileupdate").patch(myProfileUpdate)
+
 userRouter
-  .route("/:userId") //localhstudentIdost:8000/student/:
+  .route("/:userId") 
   .delete(deleteUser)
   .get(readUserDetails)
   .patch(updateUser);

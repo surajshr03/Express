@@ -10,7 +10,7 @@ let productSchema = Schema({
   quantity: { type: Number, 
     required: [true, "quantity is required."] },
   productId: { type: String,
-     required: [true, "productId is required."] },
+     required: [false, "productId is required."] },
 },{
   timestamps: true,
 });

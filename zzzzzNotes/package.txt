@@ -8,6 +8,7 @@ iv:npm i jsonwebtoken
 v: npm i multer
 vi: npm i nodemailer
 vii:npm i dotenv
+viii:npm i cors
 ----------------------------------------------------
 initially :
 node js
@@ -34,3 +35,4 @@ json pkg awuxa (no dependency)
 // npm i multer : it is a pkg which takes images from postman and add img to public folder
 // npm i nodemailer : it's a pkg that isused for automatially sending mail after api hit
 // npm i dotenv : .env ko variable run garna +
+// npm i cors : to enable cross platform api hit/sharing (i.e frontend le hit hanna pauxa api lai)
