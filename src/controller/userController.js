@@ -16,7 +16,7 @@ export let createUser = async (req, res) => {
     
 
     await sendEmail({
-      from:"SUN<shresthasuraj004@gmail.com>",
+      from:"SUN<shresthasuraj@gmail.com>",
      // to:["nitanthapa425@gmail.com","suraj.shr03@gmail.com"],//dherai lai pathaunu xa vaney array rakhney
      to:[req.body.email],
       subject:"Email verification",

@@ -40,13 +40,19 @@ export let sendEmail = async (mailInfo) => {
   }
 };
 
+
+
 // How to call mail
 // await sendMail({
-// from: '"Unique" <uniquekc425@gmail.com>',
+// from: '"Unique" <uniquekc@gmail.com>',
 //   to: ["abc@gmail.com", "nitanthapa425@gmail.com"],
 //   subject: "My first system email",
 //   html: `<h1>Hello world</h1>`,
 // });
+
+
+
+
 
 // the from part is responsible  to show
 
