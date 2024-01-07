@@ -11,7 +11,7 @@
 9)read specific user
 
 
-
+---------------------------------------------------------
 //////REGISTER:
  ------
      1)register : save data to db
@@ -32,7 +32,7 @@
         -get _id from token
         -make isVerifiedEmail : true
 
-
+-------------------------------------------------------------------------------
 //////////////-----LOGIN:
 
         - email ad pw (from postman)
@@ -41,7 +41,7 @@
         -check if pw match (if not match throw error)
         -generate token(attach (hidden)_id along with token)
         -send token to postman/frontend.
-
+------------------------------------------------------------------------------
 /////////////////--MY-profile 
             
             -two parts:
@@ -56,6 +56,34 @@
             >> 2nd step :(in myProfile (in controller), find the detailes bu using the _id)     
 
             they both will act as middleware where isAuth will send req._id to myProfile.
+------------------------------------------------------------------------------------
+////////////////////UPDATE PROFILE:
+                    -mathi ko jastai.....
+                    -pass token from postman
+                    -pass that token via isAuthenticated middleware
+                    -get _id
+
+                    -get data from body
+                    -delete email
+                    -delete password
+
+                    -update profile(except email and password)
+                    -send response
+----------------------------------------------------------------------------------
+//////////////////////     UPDATE PASSWORD:
+                     -pass token
+                     -isAuthenticated 
+                     -  _id
+                     -get _id
+                     -to update : get body from postman
+                                  -old password
+                                  -new password
+
+                     -check old pw match with database pw (if not =>error)
+                     -if match hash new pw and save to db.
+                     -send response
+
+////////////////////                                  
 
 
 

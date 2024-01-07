@@ -63,7 +63,7 @@ export let createWebuser = async (req, res, next) => {
   }
 };
 
-export const verifyEmail = async (req, res) => {
+export const verifyEmail = async (req, res, next) => {
   try {
     //get token.
     let tokenString = req.headers.authorization;
@@ -162,6 +162,147 @@ export const myProfile = async (req, res, next) => {
     res.json({
       success: false,
       message: "unable to read user.",
+    });
+  }
+};
+
+export const profileUpdate = async (req, res, next) => {
+  try {
+    let _id = req._id;
+    let data = req.body;
+    // console.log(data)
+
+    delete data.email;
+    delete data.password;
+    // console.log(data)
+
+    let result = await Webuser.findByIdAndUpdate(_id, data, { new: true });
+
+    res.json({
+      success: true,
+      message: "profile updated successfully.",
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "Couldn't update user profile.",
+    });
+  }
+};
+
+export const passwordUpdate = async (req, res, next) => {
+  try {
+    let _id = req._id;
+
+    let oldPassword = req.body.oldPassword;
+    let newPassword = req.body.newPassword;
+
+    let data = await Webuser.findById(_id);
+    // console.log(data)
+
+    let hashPassword = data.password;
+    // console.log(databasePassword);
+
+    let isPasswordValid = await bcrypt.hash(oldPassword, hashPassword);
+
+    if (isPasswordValid) {
+      let newHashPassword = await bcrypt.hash(newPassword, 10);
+
+      let result = await Webuser.findByIdAndUpdate(
+        _id,
+        { password: newHashPassword }, //yo matra update hunxa
+        { new: true }
+      );
+
+      res.json({
+        success: true,
+        message: "Password updated successfully.",
+        result: result,
+      });
+    } else {
+      throw new Error(" Credential did not match");
+    }
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "unable to update password.",
+    });
+  }
+};
+
+export const readAllWebusers = async (req, res) => {
+  let result = await Webuser.find({});
+
+  try {
+    res.json({
+      success: true,
+      message: "Webuser data read(retrieve) successfully",
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const readSpecificWebuser = async (req, res) => {
+  let id = req.params.id;
+  // console.log(id)
+  try {
+    let result = await Webuser.findById(id);
+
+    res.json({
+      success: true,
+      message: "readSpecificWebuser successful.",
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const updateSpecificUser = async (req, res) => {
+  let id = req.params.id;
+  console.log(id);
+  try {
+    let data = req.body;
+    delete data.email;
+    delete data.password;
+
+    let result = await Webuser.findByIdAndUpdate(id, data, { new: true });
+    console.log(result);
+    res.json({
+      success: true,
+      message: `updateSpecificUser successful. `,
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const deleteSpecificUser = async (req, res) => {
+  let id = req.params.id;
+  // console.log(id)
+  try {
+    let result = await Webuser.findByIdAndDelete(id);
+
+    res.json({
+      success: true,
+      message: `deleteSpecificUser successful.`,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
     });
   }
 };
