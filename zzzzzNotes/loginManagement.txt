@@ -24,11 +24,6 @@
            -isVerifiedEmail :(initially set to false)//yo section tricky xa , yeslai frontend bata genuine email xa vaney true parxam.
 
 
-
-      > During register stage:
-           -
-           -
-           -
            
      2)verify email:
         -postman sends token
@@ -46,5 +41,21 @@
         -check if pw match (if not match throw error)
         -generate token(attach (hidden)_id along with token)
         -send token to postman/frontend.
+
+/////////////////--MY-profile 
+            
+            -two parts:
+
+            >>>initial design isAuth middleware(in middleware) as its used for others too and call it .here:
+                 -pass token from postman
+                 -get token from postman
+                 -verify token (if invalid=>error)
+                 -get _id from token
+                 -next();
+
+            >> 2nd step :(in myProfile (in controller), find the detailes bu using the _id)     
+
+            they both will act as middleware where isAuth will send req._id to myProfile.
+
 
 

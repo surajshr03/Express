@@ -6,10 +6,9 @@ import { sendEmail } from "../utilis/sendemail.js";
 
 // create webuser data
 
-export let createWebuser = async (req, res) => {
-
+export let createWebuser = async (req, res, next) => {
   try {
-      let webuserData = req.body;
+    let webuserData = req.body;
     let hashPassword = await bcrypt.hash(webuserData.password, 10); //pw lai hash garyo.
     // ayeko data + isVerifiedEmail+ hashPassword lai as a object data ma send garyo.
     // ... ayeko data sabai tesma rakhdinxa
@@ -43,8 +42,7 @@ export let createWebuser = async (req, res) => {
       from: '"Hello" <uniquekc@gmail.com>',
       to: data.email,
       subject: "Account Create",
-      html: 
-      `
+      html: `
       <h1>Your account has been created successfully.</h1>
       <a href="http://localhost8001/verify-email?token=${token}">
       http://localhost8001/verify-email?token=${token}</a>
@@ -65,47 +63,95 @@ export let createWebuser = async (req, res) => {
   }
 };
 
-export const verifyEmail =async (req,res)=>{
-      try {
-//get token.
-            let tokenString = req.headers.authorization;
-            // bearer+ token
-            let tokenArray = tokenString.split(" ");
-            let token = tokenArray[1];
-//verify token:
-let infoObj = await jwt.verify(token, secretKey);
-// console.log(infoObj) 
+export const verifyEmail = async (req, res) => {
+  try {
+    //get token.
+    let tokenString = req.headers.authorization;
+    // bearer+ token
+    let tokenArray = tokenString.split(" ");
+    let token = tokenArray[1];
+    //verify token:
+    let infoObj = await jwt.verify(token, secretKey);
+    // console.log(infoObj)
 
-// get id from token
-let userId = infoObj._id;
-console.log(userId);
+    // get id from token
+    let userId = infoObj._id;
+    console.log(userId);
 
-//set isVerifiedEmail: true of userId;
+    //set isVerifiedEmail: true of userId;
 
-let result =await  Webuser.findByIdAndUpdate(
-      userId,// k ko ?
+    let result = await Webuser.findByIdAndUpdate(
+      userId, // k ko ?
       {
-            isVerifiedEmail : true // kun data ?
+        isVerifiedEmail: true, // kun data ?
       },
       {
-            new: true
-      },
-)
+        new: true,
+      }
+    );
 
-res.json({
+    res.json({
       success: true,
       message: "user verified successfully.",
-     
     });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
-      } catch (error) {
-            res.json({
-                  success: false,
-                  message: error.message,
-                });
-            
+export const loginUser = async (req, res, next) => {
+  try {
+    let email = req.body.email;
+    let password = req.body.password;
+    // console.log(email , password)
+    //find(gives all)(output in array) , findOne(gives only one from top of db)(output in object) :difference
+
+    let user = await Webuser.findOne({ email: email });
+    console.log(user);
+
+    if (user) {
+      if (user.isVerifiedEmail) {
+        let isPasswordValid = await bcrypt.compare(password, user.password);
+        if (isPasswordValid) {
+          let infoObj = {
+            _id: user._id,
+          };
+          let expiryInfo = {
+            expiresIn: `100d`,
+          };
+          let token = await jwt.sign(infoObj, secretKey, expiryInfo);
+
+          res.json({
+            success: true,
+            message: "user login successful.",
+            data: token,
+          });
+        } else {
+          throw new Error("credential error.");
+        }
+      } else {
+        throw new Error("user not verified.");
       }
+    } else {
+      throw new Error("user doesn't exist.");
+    }
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const myProfile =async (req,res,next)=>{
+
+     
+
 }
+
 
 
 
@@ -144,7 +190,6 @@ res.json({
 //       })
 // }
 // }
-
 // export let readAllWebusers2 = async (req,res) =>{
 //     let result = await Webuser.find({name:"nitan",age:29});
 
@@ -161,7 +206,6 @@ res.json({
 //     })
 // }
 // }
-
 // export let readAllWebusers3 = async (req,res) =>{
 //     let result = await Webuser.find({age:{$gt:15,$lt:25}});
 
@@ -210,9 +254,7 @@ res.json({
 //     })
 // }
 // }
-
 // -------------------------------
-
 // //read by webuser id
 // export let readWebuser = async (req, res)=>{
 //       let webuserId = req.params.webuserId;
@@ -231,7 +273,6 @@ res.json({
 //           });
 //       }
 //   };
-
 //   //update
 //   export let updateWebuser = async (req, res)=>{
 //       let webuserId = req.params.webuserId;
@@ -250,7 +291,6 @@ res.json({
 //           });
 //       }
 //   };
-
 //   //delete
 //  export  let deleteWebuser = async(req, res)=>{
 //       let webuserId = req.params.webuserId;
