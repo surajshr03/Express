@@ -146,21 +146,25 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-export const myProfile =async (req,res,next)=>{
+export const myProfile = async (req, res, next) => {
+  try {
+    //getting value passed from previous middleware.
+    let _id = req._id;
 
-     
+    let result = await Webuser.findById(_id);
 
-}
-
-
-
-
-
-
-
-
-
-
+    res.json({
+      success: true,
+      message: "user read successfully. ",
+      result: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: "unable to read user.",
+    });
+  }
+};
 
 // PRACTICE:::::::::::::::::::::::::::::::::::::
 
