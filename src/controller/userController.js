@@ -81,7 +81,7 @@ export let updateUser = async (req, res) => {
   let userData = req.body;
 
   try {
-    let result = await User.findByIdAndUpdate(userId, userData);
+    let result = await User.findByIdAndUpdate(userId, userData, {new:true});
     res.status(201).json({
       success: true,
       message: "user updated successfully.",
@@ -213,7 +213,7 @@ let token = bearerToken.split(" ")[1];
   let infoObj = jwt.verify(token,secretKey);   
   let id = infoObj.id;
 //let result = await User.findByIdAndUpdate(userId, userData);
-  let result = await User.findByIdAndUpdate(id, userData);
+  let result = await User.findByIdAndUpdate(id, userData,{new:true});
 
   res.json({
     success : true,

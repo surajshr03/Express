@@ -307,6 +307,78 @@ export const deleteSpecificUser = async (req, res) => {
   }
 };
 
+export const forgotPassword = async (req, res) => {
+  try {
+    let email = req.body.email;
+
+    let result = await Webuser.findOne({ email: email });
+
+    if (result) {
+      //token generate
+      let infoObj = {
+        _id: result._id,
+      };
+      let expiryInfo = {
+        expiresIn: "20d",
+      };
+      let token = await jwt.sign(infoObj, secretKey, expiryInfo);
+
+      await sendEmail({
+        from: '"Hello" <uniquekc@gmail.com>',
+        to: email,
+        subject: "Reset Password",
+        html: `
+        <h1>Please click given link to reset your password.</h1>
+        <a href="http://localhost8001/reset-password?token=${token}">
+        http://localhost8001/reset-password?token=${token}</a>
+        `,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "reset password link sent to given email.",
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "email doesn't exist.",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export const resetPassword = async (req, res) => {
+  try {
+    let _id = req._id;
+    // let password = req.body.password
+    let hashPassword = await bcrypt.hash(req.body.password, 10);
+
+    let result = await Webuser.findByIdAndUpdate(_id,
+      {password:hashPassword},
+      {new:true},)
+
+    res.status(201).json({
+      success: true,
+      message: "password reset successfully.",
+      result : result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//
+//
+//
+//
+
 // PRACTICE:::::::::::::::::::::::::::::::::::::
 
 // //read all data

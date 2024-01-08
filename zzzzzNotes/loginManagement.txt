@@ -31,7 +31,6 @@
         -verify token
         -get _id from token
         -make isVerifiedEmail : true
-
 -------------------------------------------------------------------------------
 //////////////-----LOGIN:
 
@@ -82,8 +81,24 @@
                      -check old pw match with database pw (if not =>error)
                      -if match hash new pw and save to db.
                      -send response
+-----------------------------------------------------------------------
+////////////////////  FORGOT PASSWORD PROCESS:
 
-////////////////////                                  
+       1: FORGOT PASSWORD
+              -pass email from postman
+              -get email
+              -check if email match in db (if not throw with status code 404)
+              -send email with link (frontend link with token)
+              -send response
+
+       2: RESET PASSWORD:    
+              -pass token via postman
+              -pass password from postman    
+              -pass through isAuthenticated  
+              -get _id
+              -hash password
+              -update that _id
+              -send response                     
 
 
 

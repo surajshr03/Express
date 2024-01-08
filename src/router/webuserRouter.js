@@ -2,12 +2,14 @@ import { Router } from "express";
 import {
   createWebuser,
   deleteSpecificUser,
+  forgotPassword,
   loginUser,
   myProfile,
   passwordUpdate,
   profileUpdate,
   readAllWebusers,
   readSpecificWebuser,
+  resetPassword,
   updateSpecificUser,
   verifyEmail,
 } from "../controller/webuserController.js";
@@ -26,6 +28,9 @@ webuserRouter.route("/my-profile").get(isAuthenticated, myProfile);
 webuserRouter.route("/update-profile").get(isAuthenticated, profileUpdate);
 
 webuserRouter.route("/update-password").patch(isAuthenticated, passwordUpdate);
+
+webuserRouter.route("/forgot-password").post(forgotPassword)
+webuserRouter.route("/reset-password").patch(isAuthenticated,resetPassword)
 
 webuserRouter
   .route("/:id")

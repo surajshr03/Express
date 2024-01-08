@@ -4,6 +4,8 @@ shortcuts:
 
 >shift+alt+f :format document
 
+>ctrl + d :  select next
+
 
 
 
