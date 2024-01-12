@@ -5,11 +5,7 @@ let webuserSchema = Schema({
     type: String,
     required: [true, "fullName is required."],
   },
-  age: {
-    type: Number,
-    required: [true, "age is required."],
-  },
-
+ 
 //   phoneNumber: {
 //     type: Number,
 //     required: [true, "number field is required"],
@@ -17,14 +13,18 @@ let webuserSchema = Schema({
 //     max: 9999999999,
 //   },
 
-// dob:{
-// type:Date,
-// required:[true,"dob is required."]
-// },
-
+dob:{
+type:Date,
+required:[true,"dob is required."]
+},
+gender:{
+  type:String,
+required:[true,"gender is required."]
+},
+//role frontend batai send garney.
 role:{
     type:String,
-    required:[true,"role is required."]
+    required:[false,"role is required."]
 },
   email: {
     type: String,
@@ -35,6 +35,7 @@ role:{
     type: String,
     required: [true, "password is required."],
   },
+  
   //yo part paxi controller ma as an object pass garney
   isVerifiedEmail:{
     type:Boolean,

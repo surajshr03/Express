@@ -14,10 +14,11 @@ import {
   verifyEmail,
 } from "../controller/webuserController.js";
 import isAuthenticated from "../middleware/isAuthenticated.js";
+import authorized from "../middleware/authorized.js";
 
 let webuserRouter = Router();
 
-webuserRouter.route("/").post(createWebuser).get(readAllWebusers);
+webuserRouter.route("/").post(createWebuser).get(isAuthenticated,authorized(["admin","superadmin"]),readAllWebusers);
 
 webuserRouter.route("/verify-email").patch(verifyEmail);
 
@@ -25,7 +26,7 @@ webuserRouter.route("/login").post(loginUser);
 
 webuserRouter.route("/my-profile").get(isAuthenticated, myProfile);
 //isAuth middleware le myProfile middleware ma value pass garxa.
-webuserRouter.route("/update-profile").get(isAuthenticated, profileUpdate);
+webuserRouter.route("/update-profile").patch(isAuthenticated, profileUpdate);
 
 webuserRouter.route("/update-password").patch(isAuthenticated, passwordUpdate);
 
@@ -34,13 +35,18 @@ webuserRouter.route("/reset-password").patch(isAuthenticated,resetPassword)
 
 webuserRouter
   .route("/:id")
-  .get(readSpecificWebuser)
-  .patch(updateSpecificUser)
-  .delete(deleteSpecificUser);
+  // .get(readSpecificWebuser)
+  // .patch(updateSpecificUser)
+  // .delete(deleteSpecificUser);
+
+.get(isAuthenticated,authorized(["admin","superadmin"]),readSpecificWebuser)//admin,superadmin
+.patch(isAuthenticated,authorized(["admin","superadmin"]),updateSpecificUser)//admin,superadmin
+.delete(isAuthenticated,authorized(["superadmin"]),deleteSpecificUser)//superadmin
 
 export default webuserRouter;
 
-// .get(readAllWebusers)
+
+
 
 // webuserRouter.route("/nitan29")
 // .get(readAllWebusers2);

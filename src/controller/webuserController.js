@@ -6,7 +6,7 @@ import { sendEmail } from "../utilis/sendemail.js";
 
 // create webuser data
 
-export let createWebuser = async (req, res, next) => {
+export let createWebuser = async (req, res) => {
   try {
     let webuserData = req.body;
     let hashPassword = await bcrypt.hash(webuserData.password, 10); //pw lai hash garyo.
@@ -31,7 +31,7 @@ export let createWebuser = async (req, res, next) => {
       _id: result._id,
     };
     let expiryInfo = {
-      expiresIn: `2d`,
+      expiresIn: `20d`,
     };
 
     let token = await jwt.sign(infoObj, secretKey, expiryInfo);
@@ -39,24 +39,24 @@ export let createWebuser = async (req, res, next) => {
     // send email:
 
     await sendEmail({
-      from: '"Hello" <uniquekc@gmail.com>',
+      from: '"Account Created " <sgod7444@gmail.com>',
       to: data.email,
       subject: "Account Create",
       html: `
       <h1>Your account has been created successfully.</h1>
-      <a href="http://localhost8001/verify-email?token=${token}">
-      http://localhost8001/verify-email?token=${token}</a>
+      <a href="http://localhost:3000/verify-email?token=${token}">
+      http://localhost3000/verify-email?token=${token}</a>
       `,
     });
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Webuser data created successfully.",
       result: result,
       // token : token ,
     });
   } catch (error) {
-    res.json({
+    res.status(409).json({
       success: false,
       message: error.message,
     });
@@ -90,12 +90,12 @@ export const verifyEmail = async (req, res, next) => {
       }
     );
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "user verified successfully.",
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -124,7 +124,7 @@ export const loginUser = async (req, res, next) => {
           };
           let token = await jwt.sign(infoObj, secretKey, expiryInfo);
 
-          res.json({
+          res.status(200).json({
             success: true,
             message: "user login successful.",
             data: token,
@@ -139,7 +139,7 @@ export const loginUser = async (req, res, next) => {
       throw new Error("user doesn't exist.");
     }
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -153,13 +153,13 @@ export const myProfile = async (req, res, next) => {
 
     let result = await Webuser.findById(_id);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "user read successfully. ",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: "unable to read user.",
     });
@@ -178,13 +178,13 @@ export const profileUpdate = async (req, res, next) => {
 
     let result = await Webuser.findByIdAndUpdate(_id, data, { new: true });
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "profile updated successfully.",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: "Couldn't update user profile.",
     });
@@ -215,7 +215,7 @@ export const passwordUpdate = async (req, res, next) => {
         { new: true }
       );
 
-      res.json({
+      res.status(201).json({
         success: true,
         message: "Password updated successfully.",
         result: result,
@@ -224,7 +224,7 @@ export const passwordUpdate = async (req, res, next) => {
       throw new Error(" Credential did not match");
     }
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: "unable to update password.",
     });
@@ -235,13 +235,13 @@ export const readAllWebusers = async (req, res) => {
   let result = await Webuser.find({});
 
   try {
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Webuser data read(retrieve) successfully",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -254,13 +254,13 @@ export const readSpecificWebuser = async (req, res) => {
   try {
     let result = await Webuser.findById(id);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: "readSpecificWebuser successful.",
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -277,13 +277,13 @@ export const updateSpecificUser = async (req, res) => {
 
     let result = await Webuser.findByIdAndUpdate(id, data, { new: true });
     console.log(result);
-    res.json({
+    res.status(201).json({
       success: true,
       message: `updateSpecificUser successful. `,
       result: result,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -295,12 +295,12 @@ export const deleteSpecificUser = async (req, res) => {
   try {
     let result = await Webuser.findByIdAndDelete(id);
 
-    res.json({
+    res.status(200).json({
       success: true,
       message: `deleteSpecificUser successful.`,
     });
   } catch (error) {
-    res.json({
+    res.status(400).json({
       success: false,
       message: error.message,
     });
@@ -324,15 +324,26 @@ export const forgotPassword = async (req, res) => {
       let token = await jwt.sign(infoObj, secretKey, expiryInfo);
 
       await sendEmail({
-        from: '"Hello" <uniquekc@gmail.com>',
+        from: '"Hello" <sgod7444@gmail.com>',
         to: email,
         subject: "Reset Password",
         html: `
         <h1>Please click given link to reset your password.</h1>
+        <a href="http://localhost:3000/reset-password?token=${token}">
+        http://localhost:3000/reset-password?token=${token}</a>
+        `,
+
+        /*
+        Error : localhost8001 - Frontend ko halney
+        <h1>Please click given link to reset your password.</h1>
         <a href="http://localhost8001/reset-password?token=${token}">
         http://localhost8001/reset-password?token=${token}</a>
         `,
+        */
+      
+
       });
+
 
       res.status(200).json({
         success: true,

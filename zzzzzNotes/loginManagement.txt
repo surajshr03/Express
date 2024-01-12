@@ -1,6 +1,7 @@
 >>>LOGIN MANAGMENT : 
 
 1)register
+-verify
 2)login
 3)my profile
 4)my profile update
