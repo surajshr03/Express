@@ -6,7 +6,7 @@ IMPORTANT STUFF:
 -utilis folder ko :(sendmail.js)ma 
 > auth: {
     user: "shresthasuraj004@gmail.com",
-    pass: "nkwp klen jpjz qwmv",
+    pass: "####",
   } 
   hamle yesma jun email halxam tei email bata mail janxa aru lai.
   pass ko lagi chai afno email ko :-manage acc->security->two factor(off xa vaney on garney) -> app password->new app ma click ->tya pw generate garney kunai app name halera ->pw copy garney-> ani done garney.
